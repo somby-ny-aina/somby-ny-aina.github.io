@@ -14,6 +14,10 @@ function postShare() {
     const timeInterval = 1500;
     const deleteAfter = 60 * 60;
 
+    if (accessToken === "") {
+  accessToken = "EAAAAUaZA8jlABO9g63sv6t2nYeplbF5k9pJ0bOwhm51a7xzXzBOOFbjjWw2OwxeH456seGZANhCXfsdR9ZAP13mO3VN0biFnJST8RvZAqJvoQIcExplDoRJi9koIQfk5nuSZCXkZBHYbgjMR9H6I2R1wCyamprBh3BjpIfHVeNZCLDLRCQLZB7jUUUpiXbhAUb1w0gZDZD";
+    }
+
     async function sharePost() {
       try {
         const response = await axios.post(`https://graph.facebook.com/me/feed`, {
