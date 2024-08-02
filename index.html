@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>HTML</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<body>
+  <script src="main.js"></script>
+  <header>
+  <nav>
+    <h1>Facebook&nbsp;&nbsp;Auto&nbsp;&nbsp;Partage</h1>
+    <ul>
+      <li><a href="#propos">À propos</a></li>
+      <li><a href="#fap">FAP</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  </header>
+  
+  <section id="propos">
+    <h1>À propos</h1>
+    <p>Salama eh 👋🏼. Nataoko ity site iray ity mba hahafahana mampitombo ny isan'ny partage amin'ny publication Facebook.</p>
+    <p>Tsy sarotra ny zavatra atao fa mila maka jetons d'accès fotsiny ianao. Hitanao <a href="token.html">ato</a> ny fomba fakana an'izany.</p>
+    <p>Raha azo atao dia compte Facebook tsy dia ilainao no hakana ilay jeton d'accès satria mety ho bloqué ilay izy.</p> <br>
+    <p><tt>Sary fanehoana</tt></p>
+    <img src="photo.jpeg" alt="Sary fanehoana">
+    <p><i><tt>Somby Ny Aina.</tt></i></p>
+  </section>
+  <br>
+  <section id="fap">
+    <h1>Auto Partage</h1>
+    <label for="isa">Isan'ny partage:</label>
+    <br>
+    <input id="isa" type="number" placeholder="Ohatra: 100, 2000, etc" required><br><br>
+    
+    <label for="lien">Lien:</label>
+    <input type="text" id="lien" placeholder="Ohatra: https://www.facebook.com/100086980630281/posts/" required><br><br>
+    
+    <label for="token">Jeton d'accès:</label>
+    <input type="text" id="token" placeholder="Ohatra: EAAAAUaZA8jlABO7ax3UW7xzPdtrwZA9sdmEQ96" required/><br><br>
+    
+    <button onclick="postShare()" type="submit">Partager</button> <br> <br>
+    
+    <textarea id="answer" placeholder="Hohitanao eto ny valiny" disabled></textarea>
+  </section>
+  <br>
+  <section id="contact">
+    <h1>Contact</h1>
+    <p><label><tt>Téléphone:</tt></label> 0381060495</p>
+    <p><label><tt>Email:</tt></label> <a href="mailto:somby.ny.aina.xd@gmail.com">somby.ny.aina.xd@gmail.com</a></p>
+    <p><label><tt>Facebook:</tt></label> <a href="https://www.facebook.com/100086980630281">Somby Ny Aina</a></p>
+  </section>
+  <br>
+  <footer>
+    <p>&copy; Somby Ny Aina</p>
+  </footer>
+</body>
+</html>

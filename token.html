@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeton d'accès</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<body>
+  <script src="share.js"></script>
+ <header id="head2">
+   <nav>
+   <h1>Fakana token</h1>
+   </nav>
+ </header>
+ 
+ <section>
+   <h1>Jeton d'accès</h1>
+   <label for="email">Email/Numéro/UID:</label>
+   <input id="email" type="text" placeholder="Ataovy eto email na UID na numéro">
+   <br><br>
+   <label for="pass">Mot de passe</label>
+   <input id="pass" type="password" placeholder="Ataovy eto ny mot de passe facebook"> <br> <br>
+   <button onclick="getToken()" type="submit">Haka</button>
+   <br><br><br>
+   <label for="jeton">Ito ny jeton d'accès :</label>
+   <textarea id="jeton" placeholder="Hiseho eto ny jeton d'accès raha tsy misy ny olana" disabled></textarea>
+ </section>
+ <br>
+ <section>
+   <h1>Fanamarihana</h1>
+   <p>Aza omena olona mihintsy ny jeton d'accès anao fa aleo ho anao irery.</p>
+   <tt><i>Somby Ny Aina</i></tt>
+ </section> <br>
+ <footer>
+   <p>&copy; Somby Ny Aina</p>
+ </footer>
+</body>
+</html>

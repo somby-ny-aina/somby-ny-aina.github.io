@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  align-content: center;
+  align-items: center;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #00C75B;
+  padding: 5px;
+  text-align: center;
+  height: 110px;
+}
+
+header#head2 {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #00C75B;
+  padding: 5px;
+  text-align: center;
+  height: 80px;
+}
+
+nav {
+  text-align: center;
+}
+
+nav h1 {
+  font-size: 20pt;
+  color: white;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  font-size: 12pt;
+  color: whitesmoke
+}
+
+nav ul li a:hover {
+  font-weight: bold;
+  color: darkslategrey;
+}
+
+section {
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 2px grey;
+}
+
+section h1 {
+  border-bottom: 2px solid #00C75B;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+section img {
+  width: 100%;
+}
+
+input {
+  width: 99%;
+  height:40px;
+  margin: 7px 0 5px;
+  border: 1px solid dimgrey;
+  border-radius: 10px
+}
+
+label {
+  font-family: Brush Script MT;
+}
+
+a {
+  text-decoration: none;
+  color: #00C75B;
+}
+
+button {
+  width: 50%;
+  height:40px;
+  margin: 0 25%;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: #00C75B;
+  color: whitesmoke;
+  font-size: 10pt;
+}
+
+textarea {
+  width: 98%;
+  height:100px;
+  padding: 5px;
+  margin: 7px 0 5px;
+  border: 1px solid dimgrey;
+  border-radius: 10px;
+  background-color: #f1f1f1;
+}
+
+footer {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #00C75B;
+  padding: 5px;
+  text-align: center;
+  height: 50px;
+}
+
+footer p {
+  color: white;
+}
