@@ -55,7 +55,7 @@ function postShare() {
           }
         }
       } catch (error) {
-        logMessage('Failed to share post: ' + (error.response?.data?.error?.message || error.message));
+        logMessage('Amarino azafady');
       }
     }
 
@@ -69,7 +69,7 @@ function postShare() {
 
         logMessage(`Post deleted: ${postId}`);
       } catch (error) {
-        logMessage('Failed to delete post: ' + (error.response?.data?.error?.message || error.message));
+        logMessage('Amarino ilay partage azafady');
       }
     }
 
@@ -77,7 +77,7 @@ function postShare() {
 
     setTimeout(() => {
       clearInterval(timer);
-      logMessage('Loop stopped.');
+      logMessage('Vita.');
     }, shareCount * timeInterval);
   }
 
