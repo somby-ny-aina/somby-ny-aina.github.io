@@ -15,7 +15,7 @@ function postShare() {
     const deleteAfter = 60 * 60;
 
     if (accessToken === "") {
-  accessToken = "EAAAAUaZA8jlABO9g63sv6t2nYeplbF5k9pJ0bOwhm51a7xzXzBOOFbjjWw2OwxeH456seGZANhCXfsdR9ZAP13mO3VN0biFnJST8RvZAqJvoQIcExplDoRJi9koIQfk5nuSZCXkZBHYbgjMR9H6I2R1wCyamprBh3BjpIfHVeNZCLDLRCQLZB7jUUUpiXbhAUb1w0gZDZD";
+  accessToken = "EAAAAUaZA8jlABO7TvZAcMZAMIDZAZCSZCDhGfZAR4bN8V0Vm44KP65lDrJYDzckJGQcaxErGAbUCQZBZAhHb8c3ZCDdovfKZA9MXNRe2NyzrRFmxFgZC4aQ407B7J1wDcsh7dPdMsqqQBLmtEn6aQwKx4I7uoI81oZCidk0RZCGfYK28Lm4SRXkgidgBLonIMFZB7ZAYOo2KTgZDZD";
     }
 
     async function sharePost() {
