@@ -8,7 +8,7 @@ function postShare() {
   }
 
   function startSharing() {
-    const accessToken = document.getElementById("token").value;
+    let accessToken = document.getElementById("token").value;
     const shareUrl = document.getElementById("lien").value;
     const shareCount = parseInt(document.getElementById("isa").value, 10);
     const timeInterval = 1500;
