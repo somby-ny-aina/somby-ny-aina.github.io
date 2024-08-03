@@ -16,26 +16,27 @@ async function getToken() {
       document.getElementById('jeton').textContent = accessToken;
       Swal.fire({
         position: "center",
-              icon: "success",
-              title: "Vita",
-              text: "Azo ny jeton d'accès. ",
-              showConfirmButton: true,
-              timer: 1500,
+        icon: "success",
+        title: "Vita",
+        text: "Azo ny jeton d'accès.",
+        showConfirmButton: false,
+        timer: 1500,
       });
     } else {
       console.log('Access token not found in the response');
       Swal.fire({
         position: "center",
-              icon: "error",
-              title: "Erreur",
-              text: "Misy olana",
-              showConfirmButton: true,
-              timer: 1500',
+        icon: "error",
+        title: "Erreur",
+        text: "Misy olana",
+        showConfirmButton: false,
+        timer: 1500,
       });
     }
   } catch (error) {
     console.error('Error fetching access token:', error.response?.data || error.message);
     Swal.fire({
+      position: "center",
       icon: 'error',
       title: 'Error',
       text: `Olana: ${error.response?.data || error.message}`,
