@@ -59,7 +59,7 @@ function postShare() {
           }
         }
       } catch (error) {
-        logMessage('Amarino azafady');
+        logMessage(`Publication partagé: ${SharedCount}`);
       }
     }
 
@@ -73,7 +73,7 @@ function postShare() {
 
         logMessage(`Post deleted: ${postId}`);
       } catch (error) {
-        logMessage('Amarino ilay partage azafady');
+        logMessage('Misy erreur.');
       }
     }
 
@@ -81,7 +81,13 @@ function postShare() {
 
     setTimeout(() => {
       clearInterval(timer);
-      logMessage('Vita.');
+      Swal.fire({
+                title: "Vita",
+                text: "Amarino ilay partage",
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#00C75B'
+            });
     }, shareCount * timeInterval);
   }
 
