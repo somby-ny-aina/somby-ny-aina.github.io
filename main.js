@@ -59,7 +59,7 @@ function postShare() {
           }
         }
       } catch (error) {
-        logMessage('Publication partagée.');
+        logMessage(`Publication partagée: ${sharedCount}`);
       }
     }
 
