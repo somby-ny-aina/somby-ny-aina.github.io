@@ -82,12 +82,13 @@ function postShare() {
     setTimeout(() => {
       clearInterval(timer);
       Swal.fire({
-                title: "Vita",
-                text: "Amarino ilay partage",
-                icon: 'success',
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#00C75B'
-            });
+        position: "center",
+        icon: "success",
+        title: "Vita",
+        text: "Amarino ilay partage azafady",
+        showConfirmButton: false,
+        timer: 1500
+});
     }, shareCount * timeInterval);
   }
 
