@@ -59,7 +59,7 @@ function postShare() {
           }
         }
       } catch (error) {
-        logMessage(`Publication partagée: ${sharedCount}`);
+        logMessage(`Publication partagée, par Somby Ny Aina`);
       }
     }
 
