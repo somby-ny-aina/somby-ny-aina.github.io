@@ -59,7 +59,7 @@ function postShare() {
           }
         }
       } catch (error) {
-        logMessage(`Publication partagé: ${SharedCount}`);
+        logMessage('Publication partagée.');
       }
     }
 
@@ -88,7 +88,7 @@ function postShare() {
         text: "Amarino ilay partage azafady",
         showConfirmButton: false,
         timer: 1500
-});
+    });
     }, shareCount * timeInterval);
   }
 
