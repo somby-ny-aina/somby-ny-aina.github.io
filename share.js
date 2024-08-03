@@ -38,7 +38,7 @@ async function getToken() {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: `Error fetching access token: ${error.response?.data || error.message}`,
+      text: `Olana: ${error.response?.data || error.message}`,
     });
   }
 }
