@@ -38,8 +38,10 @@ async function getToken() {
     Swal.fire({
       position: "center",
       icon: 'error',
-      title: 'Error',
+      title: 'Erreur',
       text: `Olana: ${error.response?.data || error.message}`,
+      showConfirmButton: false,
+      timer: 1500,
     });
   }
 }
