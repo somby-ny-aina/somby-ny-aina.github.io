@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facebook Like Button Example</title>
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0" nonce="YOUR_NONCE_VALUE"></script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0"></script>
 </head>
 <body>
     <h1>Hello, world!</h1>
-    <div class="fb-like" data-href="YOUR_URL" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
+    <div class="fb-like" data-href="https://facebook.com/100086980630281" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
 
     <script>
-        document.querySelector('.fb-like').setAttribute('data-href', encodeURIComponent(document.location.href));
+        // Ensure the Like button is rendered correctly
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof FB !== 'undefined') {
+                FB.XFBML.parse();
+            }
+        });
     </script>
 </body>
-  </html
+</html>
