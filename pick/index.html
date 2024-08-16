@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Comment Picker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-comments"></i> Facebook Comment Picker</h1>
+        <div class="input-group">
+            <input type="text" id="post-id" placeholder="Enter Facebook Post ID">
+            <button id="fetch-comments"><i class="fas fa-sync-alt"></i> Fetch Comments</button>
+        </div>
+        <div id="comments-container" class="comments-container"></div>
+        <button id="pick-winner" class="btn-primary"><i class="fas fa-trophy"></i> Pick a Winner</button>
+    </div>
+    <script src="swal"></script>
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>
