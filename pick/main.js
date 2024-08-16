@@ -1,3 +1,35 @@
+// Initialize the Facebook SDK
+window.fbAsyncInit = function() {
+    FB.init({
+        appId      : '423490020715916', // Replace with your Facebook App ID
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v12.0'
+    });
+
+    // Optional: Check login status
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            console.log('Logged in.');
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Not Logged In',
+                text: 'Please log in to Facebook to use this feature.',
+            });
+        }
+    });
+};
+
+// Load the SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
 document.getElementById('fetch-comments').addEventListener('click', fetchComments);
 document.getElementById('pick-winner').addEventListener('click', pickWinner);
 
@@ -16,35 +48,29 @@ function fetchComments() {
     }
 
     const accessToken = 'EAAGBKXRALYwBO2D0Ns5Er3a0ly3l3etkit8tNTvmOqwVZCLFJrr6a7ZBpu3L1Xhurff58ZA5ZBusJpQTQzzfX9i4m1i5m9sPXKJTbWXif5H6MRQ86jcQu3gmcZB4oYM5aZBK9MaGRZAdwDTiWhZCFo07g3CkGqwXomtzdNpjZBNJBEYfHljay6dpqltMslQZBmgtIZD';
-    const url = `https://graph.facebook.com/v12.0/${postId}/comments?access_token=${accessToken}`;
-
-    axios.get(url)
-        .then(response => {
-            if (response.data.error) {
+    FB.api(
+        `/${postId}/comments`,
+        'GET',
+        { access_token: accessToken },
+        function(response) {
+            if (!response || response.error) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Error fetching comments: ' + response.data.error.message,
+                    text: 'Error fetching comments: ' + (response.error ? response.error.message : 'Unknown error'),
                 });
                 return;
             }
 
-            comments = response.data.data;
+            comments = response.data;
             displayComments();
             Swal.fire({
                 icon: 'success',
                 title: 'Comments Fetched',
                 text: `${comments.length} comments retrieved successfully!`,
             });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Failed to fetch comments. Please try again later.',
-            });
-        });
+        }
+    );
 }
 
 function displayComments() {
