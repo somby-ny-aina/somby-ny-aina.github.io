@@ -15,7 +15,7 @@ function fetchComments() {
         return;
     }
 
-    const accessToken = 'EAAAAUaZA8jlABOy4pf9ZCNIg2bn8cfU5rZBlRwXYbQ46qQEkdJcCy5yZBvZAO8ZCM3zNCpMCNM78UZBX8zep0PoZBAIvhxY15fyA1FtWDUqRVq3YQJVI7KGFAaarMwVuWTgd1tKTBbqWYZByfl8jfTjWtJ40LhYDOhz2RScVBjGueAXZAG7qqsQwrdH0X8BZCzjyBsVmQZDZD';
+    const accessToken = 'EAAGBKXRALYwBO2D0Ns5Er3a0ly3l3etkit8tNTvmOqwVZCLFJrr6a7ZBpu3L1Xhurff58ZA5ZBusJpQTQzzfX9i4m1i5m9sPXKJTbWXif5H6MRQ86jcQu3gmcZB4oYM5aZBK9MaGRZAdwDTiWhZCFo07g3CkGqwXomtzdNpjZBNJBEYfHljay6dpqltMslQZBmgtIZD';
     const url = `https://graph.facebook.com/v12.0/${postId}/comments?access_token=${accessToken}`;
 
     axios.get(url)
