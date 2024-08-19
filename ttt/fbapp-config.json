@@ -1,0 +1,41 @@
+{
+  "instant_games": {
+    "custom_update_templates": {
+      "play_turn": {
+        "example": "It's your turn! Can you beat {opponent_name}?"
+      },
+      "game_won": {
+        "example": "{winner_name} has won the game!"
+      },
+      "game_draw": {
+        "example": "The game ended in a draw!"
+      }
+    },
+    "surfaceable_stats": {
+      "rank": {
+        "priority": 1,
+        "order": 1,
+        "label": {
+          "localizations": {
+            "en_US": "Rank",
+            "th_TH": "\\u{0E22}\\u{0E28}"
+          },
+          "fallback": "Rank"
+        },
+        "values": {
+          "0": "Unranked",
+          "1": "Bronze",
+          "2": "Silver",
+          "3": "Gold"
+        }
+      }
+    },
+    "orientation": "PORTRAIT",
+    "override_web_orientation": "LANDSCAPE",
+    "navigation_menu_version": "NAV_BAR",
+    "match_player_config": {
+      "min_context_size": 2,
+      "max_context_size": 2
+    }
+  }
+}
