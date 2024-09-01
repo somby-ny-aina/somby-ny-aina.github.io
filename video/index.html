@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call Website</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        #videoCallContainer {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-color: #333;
+        }
+
+        #localVideo, #remoteVideo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #remoteVideo {
+            z-index: 1;
+            background: linear-gradient(to top right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+        }
+
+        #localVideo {
+            width: 100px;
+            height: 150px;
+            top: 20px;
+            right: 20px;
+            border-radius: 8px;
+            border: 2px solid #fff;
+            z-index: 2;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 3;
+        }
+
+        .control-button {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .control-button i {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="videoCallContainer">
+    <video id="remoteVideo" autoplay playsinline></video>
+    <video id="localVideo" autoplay playsinline muted></video>
+
+    <div id="controls">
+        <button class="control-button" id="callButton"><i class="fas fa-phone"></i></button>
+        <button class="control-button" id="muteButton"><i class="fas fa-microphone"></i></button>
+        <button class="control-button" id="cameraButton"><i class="fas fa-video"></i></button>
+        <button class="control-button" id="endCallButton"><i class="fas fa-phone-slash"></i></button>
+    </div>
+</div>
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Custom JS -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let localStream;
+        let remoteStream;
+        let peerConnection;
+        const configuration = {
+            iceServers: [
+                { urls: "stun:stun.l.google.com:19302" },
+                { urls: "stun:stun1.l.google.com:19302" }
+            ]
+        };
+        const signalingServerUrl = "ws://webhook-k0l6.onrender.com";
+        let signalingSocket;
+
+        let username = localStorage.getItem('username');
+
+        if (!username) {
+            Swal.fire({
+                title: 'Enter your username',
+                input: 'text',
+                inputPlaceholder: 'Your username',
+                allowOutsideClick: false,
+                confirmButtonText: 'Save'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    username = result.value;
+                    localStorage.setItem('username', username);
+                    initializeVideoCall(username);
+                }
+            });
+        } else {
+            initializeVideoCall(username);
+        }
+
+        function initializeVideoCall(username) {
+            document.getElementById('videoCallContainer').style.display = 'block';
+
+            navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+                .then(stream => {
+                    localStream = stream;
+                    const localVideo = document.getElementById('localVideo');
+                    localVideo.srcObject = localStream;
+                })
+                .catch(error => {
+                    console.error('Error accessing webcam: ', error);
+                });
+
+            document.getElementById('callButton').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Enter the username of the person you want to call',
+                    input: 'text',
+                    inputPlaceholder: 'Their username',
+                    confirmButtonText: 'Call',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const calleeUsername = result.value;
+                        startCall(calleeUsername);
+                    }
+                });
+            });
+
+            document.getElementById('muteButton').addEventListener('click', function () {
+                const enabled = localStream.getAudioTracks()[0].enabled;
+                localStream.getAudioTracks()[0].enabled = !enabled;
+                this.querySelector('i').classList.toggle('fa-microphone-slash');
+            });
+
+            document.getElementById('cameraButton').addEventListener('click', function () {
+                const enabled = localStream.getVideoTracks()[0].enabled;
+                localStream.getVideoTracks()[0].enabled = !enabled;
+                this.querySelector('i').classList.toggle('fa-video-slash');
+            });
+
+            document.getElementById('endCallButton').addEventListener('click', function () {
+                endCall();
+            });
+
+            signalingSocket = new WebSocket(signalingServerUrl);
+
+            signalingSocket.onmessage = async (message) => {
+                const data = JSON.parse(message.data);
+                switch (data.type) {
+                    case "offer":
+                        await handleOffer(data.offer, data.username);
+                        break;
+                    case "answer":
+                        await handleAnswer(data.answer);
+                        break;
+                    case "ice-candidate":
+                        if (peerConnection) {
+                            await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                        }
+                        break;
+                }
+            };
+        }
+
+        async function startCall(calleeUsername) {
+            peerConnection = new RTCPeerConnection(configuration);
+
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    signalingSocket.send(JSON.stringify({
+                        type: "ice-candidate",
+                        candidate: event.candidate,
+                        username: calleeUsername
+                    }));
+                }
+            };
+
+            peerConnection.ontrack = (event) => {
+                const remoteVideo = document.getElementById('remoteVideo');
+                if (!remoteStream) {
+                    remoteStream = new MediaStream();
+                    remoteVideo.srcObject = remoteStream;
+                }
+                remoteStream.addTrack(event.track);
+            };
+
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+
+            const offer = await peerConnection.createOffer();
+            await peerConnection.setLocalDescription(offer);
+
+            signalingSocket.send(JSON.stringify({
+                type: "offer",
+                offer: offer,
+                username: calleeUsername
+            }));
+        }
+
+        async function handleOffer(offer, username) {
+            peerConnection = new RTCPeerConnection(configuration);
+
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    signalingSocket.send(JSON.stringify({
+                        type: "ice-candidate",
+                        candidate: event.candidate,
+                        username: username
+                    }));
+                }
+            };
+
+            peerConnection.ontrack = (event) => {
+                const remoteVideo = document.getElementById('remoteVideo');
+                if (!remoteStream) {
+                    remoteStream = new MediaStream();
+                    remoteVideo.srcObject = remoteStream;
+                }
+                remoteStream.addTrack(event.track);
+            };
+
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+
+            const answer = await peerConnection.createAnswer();
+            await peerConnection.setLocalDescription(answer);
+
+            signalingSocket.send(JSON.stringify({
+                type: "answer",
+                answer: answer,
+                username: username
+            }));
+        }
+
+        async function handleAnswer(answer) {
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+        }
+
+        function endCall() {
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+            }
+
+            if (signalingSocket) {
+                signalingSocket.close();
+                signalingSocket = null;
+            }
+
+            const remoteVideo = document.getElementById('remoteVideo');
+            const localVideo = document.getElementById('localVideo');
+
+            if (remoteStream) {
+                remoteStream.getTracks().forEach(track => track.stop());
+                remoteStream = null;
+            }
+
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+                localStream = null;
+            }
+
+            remoteVideo.srcObject = null;
+            localVideo.srcObject = null;
+
+            Swal.fire('Call ended');
+        }
+    });
+</script>
+
+</body>
+</html>
